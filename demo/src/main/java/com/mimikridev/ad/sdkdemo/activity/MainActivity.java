@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAppLovinSdkKey(getResources().getString(R.string.applovin_sdk_key))
                 .setPangleAppId(Constant.pangle_app_ID)
                 .setIronSourceAppKey(Constant.IRONSOURCE_APP_KEY)
-                .setDebug(true)
+                .setDebug(BuildConfig.DEBUG)
                 .build();
     }
 
