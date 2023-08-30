@@ -30,7 +30,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-@SuppressWarnings("ConstantConditions")
 public class ActivitySplash extends AppCompatActivity {
 
     private static final String TAG = "ActivitySplash";

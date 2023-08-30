@@ -30,6 +30,7 @@ public class Constant {
     public static final String pangle_app_BANNER_ID = "980653430";
     public static final String pangle_app_INTERSTITIAL_ID = "980653442";
     public static final String pangle_app_REWARDED_ID = "980656028";
+    public static final String pangle_app_NATIVE_ID = "";
 
     public static final String APPLOVIN_BANNER_ID = "da17eff31ae69f15";
     public static final String APPLOVIN_INTERSTITIAL_ID = "98f6a586ed642919";
@@ -51,7 +52,7 @@ public class Constant {
     public static final String WORTISE_BANNER_ID = "test-banner";
     public static final String WORTISE_INTERSTITIAL_ID = "test-interstitial";
     public static final String WORTISE_REWARDED_ID = "test-rewarded";
-    public static final String WORTISE_NATIVE_ID = "test-native";
+    //public static final String WORTISE_NATIVE_ID = "test-native";
     public static final String WORTISE_APP_OPEN_AD_ID = "test-app-open";
 
     public static String NATIVE_STYLE = "default";
