@@ -4,8 +4,8 @@ public class Constant {
 
     public static final String AD_STATUS = "1";
 
-    public static String AD_NETWORK = "admob";
-    public static final String BACKUP_AD_NETWORK = "none";
+    public static String AD_NETWORK = "pangle";
+    public static final String BACKUP_AD_NETWORK = "pangle";
 
     public static final String ADMOB_BANNER_ID = "ca-app-pub-3940256099942544/6300978111";
     public static final String ADMOB_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1033173712";
@@ -26,10 +26,10 @@ public class Constant {
 
     public static final String STARTAPP_APP_ID = "0";
     public static final String PANGLE = "pangle";
-    public static final String pangle_app_ID = "8126678";
-    public static final String pangle_app_BANNER_ID = "980456040";
-    public static final String pangle_app_INTERSTITIAL_ID = "980456041";
-    public static final String UNITY_REWARDED_ID = "rewardedVideo";
+    public static final String pangle_app_ID = "8173728";
+    public static final String pangle_app_BANNER_ID = "980653430";
+    public static final String pangle_app_INTERSTITIAL_ID = "980653442";
+    public static final String pangle_app_REWARDED_ID = "980656028";
 
     public static final String APPLOVIN_BANNER_ID = "da17eff31ae69f15";
     public static final String APPLOVIN_INTERSTITIAL_ID = "98f6a586ed642919";

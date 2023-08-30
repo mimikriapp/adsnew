@@ -5,6 +5,7 @@ import static com.mimikridev.ad.sdk.util.Constant.APPLOVIN_DISCOVERY;
 import static com.mimikridev.ad.sdk.util.Constant.APPLOVIN_MAX;
 import static com.mimikridev.ad.sdk.util.Constant.FACEBOOK;
 import static com.mimikridev.ad.sdk.util.Constant.IRONSOURCE;
+import static com.mimikridev.ad.sdk.util.Constant.PANGLE;
 import static com.mimikridev.ad.sdk.util.Constant.STARTAPP;
 
 import android.app.Activity;
@@ -26,6 +27,11 @@ import com.applovin.sdk.AppLovinAdDisplayListener;
 import com.applovin.sdk.AppLovinAdLoadListener;
 import com.applovin.sdk.AppLovinAdSize;
 import com.applovin.sdk.AppLovinSdk;
+import com.bytedance.sdk.openadsdk.api.reward.PAGRewardItem;
+import com.bytedance.sdk.openadsdk.api.reward.PAGRewardedAd;
+import com.bytedance.sdk.openadsdk.api.reward.PAGRewardedAdInteractionListener;
+import com.bytedance.sdk.openadsdk.api.reward.PAGRewardedAdLoadListener;
+import com.bytedance.sdk.openadsdk.api.reward.PAGRewardedRequest;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.RewardedVideoAdListener;
@@ -47,7 +53,7 @@ public class RewardedAd {
     @SuppressWarnings("deprecation")
     public static class Builder {
 
-        private static final String TAG = "SoloRewarded";
+        private static final String TAG = "AdNetwork Rewarded";
         private final Activity activity;
 
         private com.facebook.ads.RewardedVideoAd fanRewardedVideoAd;
@@ -55,12 +61,14 @@ public class RewardedAd {
         private MaxRewardedAd applovinMaxRewardedAd;
         public AppLovinInterstitialAdDialog appLovinInterstitialAdDialog;
         public AppLovinAd appLovinAd;
+        //public static PAGRewardedAd mPAGRewardedAd;
+        public PAGRewardedAd mPAGRewardedAd;
 
         private String adStatus = "";
         private String mainAds = "";
         private String backupAds = "";
         private String fanRewardedId = "";
-        private String unityRewardedId = "";
+        private String PangleRewardedId = "";
         private String applovinMaxRewardedId = "";
         private String applovinDiscRewardedZoneId = "";
         private String ironSourceRewardedId = "";
@@ -70,6 +78,7 @@ public class RewardedAd {
 
         public Builder(Activity activity) {
             this.activity = activity;
+
         }
 
         public Builder build(OnRewardedAdCompleteListener onComplete, OnRewardedAdDismissedListener onDismiss) {
@@ -104,10 +113,6 @@ public class RewardedAd {
             return this;
         }
 
-        public Builder setUnityRewardedId(String unityRewardedId) {
-            this.unityRewardedId = unityRewardedId;
-            return this;
-        }
 
         public Builder setApplovinMaxRewardedId(String applovinMaxRewardedId) {
             this.applovinMaxRewardedId = applovinMaxRewardedId;
@@ -121,6 +126,11 @@ public class RewardedAd {
 
         public Builder setIronSourceRewardedId(String ironSourceRewardedId) {
             this.ironSourceRewardedId = ironSourceRewardedId;
+            return this;
+        }
+
+        public Builder setPangleRewardedId(String PangleRewardedId) {
+            this.PangleRewardedId = PangleRewardedId;
             return this;
         }
 
@@ -291,6 +301,96 @@ public class RewardedAd {
                                 Log.d(TAG, "[" + mainAds + "] " + "ad hidden");
                             }
                         });
+                        break;
+
+                    case PANGLE:
+                        PAGRewardedRequest request = new PAGRewardedRequest();
+                        PAGRewardedAd.loadAd(PangleRewardedId, request,
+                                new PAGRewardedAdLoadListener() {
+                                    @Override
+                                    public void onError(int code, String message) {
+                                        loadRewardedBackupAd(onComplete, onDismiss);
+                                        Log.d(TAG, "[" + mainAds + "] " + "failed to load rewarded ad: "+" kode "+code +" "+ message + ", try to load backup ad: " + backupAds);
+                                    }
+
+                                    @Override
+                                    public void onAdLoaded(PAGRewardedAd rewardedAd) {
+                                        Log.d(TAG, "[" + mainAds + "] " + "rewarded ad loaded");
+                                    }
+                                });
+                         new PAGRewardedAdInteractionListener() {
+                             @Override
+                             public void onAdShowed() {
+
+                             }
+
+                             @Override
+                             public void onAdClicked() {
+
+                             }
+
+                             @Override
+                             public void onAdDismissed() {
+                                 loadRewardedAd(onComplete, onDismiss);
+                                 onDismiss.onRewardedAdDismissed();
+                             }
+
+                             @Override
+                             public void onUserEarnedReward(PAGRewardItem item) {
+                                 onComplete.onRewardedAdComplete();
+                                 Log.d(TAG, "[" + mainAds + "] " + "rewarded ad complete");
+                             }
+
+                             @Override
+                             public void onUserEarnedRewardFail(int errorCode, String errorMsg) {
+                                 loadRewardedAd(onComplete, onDismiss);
+                                 onDismiss.onRewardedAdDismissed();
+                                 Log.d(TAG, "[" + mainAds + "] " + "failed to load rewarded ad: " + errorCode + errorMsg + ", try to load backup ad: " + backupAds);
+
+                             }
+                         };
+
+
+/*
+                        mPAGRewardedAd.setAdInteractionListener(new PAGRewardedAdInteractionListener(){
+
+                            @Override
+                            public void onAdShowed() {
+
+                            }
+
+                            @Override
+                            public void onAdClicked() {
+
+                            }
+
+                            @Override
+                            public void onAdDismissed() {
+                                loadRewardedAd(onComplete, onDismiss);
+                                onDismiss.onRewardedAdDismissed();
+                            }
+
+                            @Override
+                            public void onUserEarnedReward(PAGRewardItem item) {
+                                onComplete.onRewardedAdComplete();
+                                Log.d(TAG, "[" + mainAds + "] " + "rewarded ad complete");
+                            }
+
+                            @Override
+                            public void onUserEarnedRewardFail(int errorCode, String errorMsg) {
+                                loadRewardedAd(onComplete, onDismiss);
+                                onDismiss.onRewardedAdDismissed();
+                                Log.d(TAG, "[" + mainAds + "] " + "failed to load rewarded ad: " + errorCode + errorMsg + ", try to load backup ad: " + backupAds);
+
+                            }
+                        });
+
+
+
+ */
+
+
+
                         break;
 
                     case IRONSOURCE:
@@ -491,6 +591,90 @@ public class RewardedAd {
                         });
                         break;
 
+
+                    case PANGLE:
+                        PAGRewardedRequest request = new PAGRewardedRequest();
+                        PAGRewardedAd.loadAd(PangleRewardedId, request,
+                                new PAGRewardedAdLoadListener() {
+                                    @Override
+                                    public void onError(int code, String message) {
+                                        Log.d(TAG, "[" + backupAds + "] [backup] " + "failed to load rewarded ad: "+code +" "+ message + ", try to load backup ad: " + backupAds);
+                                    }
+
+                                    @Override
+                                    public void onAdLoaded(PAGRewardedAd rewardedAd) {
+                                        Log.d(TAG, "[" + backupAds + "] [backup] " + "rewarded ad loaded");
+                                    }
+                                });
+                        new PAGRewardedAdInteractionListener() {
+                            @Override
+                            public void onAdShowed() {
+
+                            }
+
+                            @Override
+                            public void onAdClicked() {
+
+                            }
+
+                            @Override
+                            public void onAdDismissed() {
+                                loadRewardedAd(onComplete, onDismiss);
+                                //onDismiss.onRewardedAdDismissed();
+                            }
+
+                            @Override
+                            public void onUserEarnedReward(PAGRewardItem item) {
+                                onComplete.onRewardedAdComplete();
+                                Log.d(TAG, "[" + backupAds + "] [backup] " + "rewarded ad complete");
+                            }
+
+                            @Override
+                            public void onUserEarnedRewardFail(int errorCode, String errorMsg) {
+                                loadRewardedAd(onComplete, onDismiss);
+                            }
+                        };
+
+                    /*    mPAGRewardedAd.setAdInteractionListener(new PAGRewardedAdInteractionListener(){
+
+                            @Override
+                            public void onAdShowed() {
+
+                            }
+
+                            @Override
+                            public void onAdClicked() {
+
+                            }
+
+                            @Override
+                            public void onAdDismissed() {
+                                loadRewardedAd(onComplete, onDismiss);
+                                //onDismiss.onRewardedAdDismissed();
+                            }
+
+                            @Override
+                            public void onUserEarnedReward(PAGRewardItem item) {
+                                onComplete.onRewardedAdComplete();
+                                Log.d(TAG, "[" + backupAds + "] [backup] " + "rewarded ad complete");
+                            }
+
+                            @Override
+                            public void onUserEarnedRewardFail(int errorCode, String errorMsg) {
+                                loadRewardedAd(onComplete, onDismiss);
+                            }
+                        });
+
+                     */
+
+
+
+                        break;
+
+
+
+
+
                     case IRONSOURCE:
                         IronSource.setLevelPlayRewardedVideoListener(new LevelPlayRewardedVideoListener() {
                             @Override
@@ -605,6 +789,15 @@ public class RewardedAd {
                         }
                         break;
 
+                    case PANGLE:
+                        if (mPAGRewardedAd != null) {
+                            mPAGRewardedAd.show(activity);
+                        } else {
+                            showRewardedBackupAd(onComplete, onDismiss, onError);
+                        }
+
+                        break;
+
 
 
                     default:
@@ -650,6 +843,15 @@ public class RewardedAd {
                         } else {
                             onError.onRewardedAdError();
                         }
+                        break;
+
+                    case PANGLE:
+                        if (mPAGRewardedAd != null) {
+                            mPAGRewardedAd.show(activity);
+                        } else {
+                            onError.onRewardedAdError();
+                        }
+
                         break;
 
                     case IRONSOURCE:

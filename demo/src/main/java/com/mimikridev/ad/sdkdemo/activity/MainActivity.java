@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAppLovinSdkKey(getResources().getString(R.string.applovin_sdk_key))
                 .setPangleAppId(Constant.pangle_app_ID)
                 .setIronSourceAppKey(Constant.IRONSOURCE_APP_KEY)
-                .setDebug(BuildConfig.DEBUG)
+                .setDebug(true)
                 .build();
     }
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMainAds(Constant.AD_NETWORK)
                 .setBackupAds(Constant.BACKUP_AD_NETWORK)
                 .setFanRewardedId(Constant.FAN_REWARDED_ID)
-                .setUnityRewardedId(Constant.UNITY_REWARDED_ID)
+                .setPangleRewardedId(Constant.pangle_app_REWARDED_ID)
                 .setApplovinMaxRewardedId(Constant.APPLOVIN_MAX_REWARDED_ID)
                 .setApplovinDiscRewardedZoneId(Constant.APPLOVIN_DISC_REWARDED_ZONE_ID)
                 .setIronSourceRewardedId(Constant.IRONSOURCE_REWARDED_ID)
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new OnRewardedAdDismissedListener() {
                     @Override
                     public void onRewardedAdDismissed() {
-
+                        Toast.makeText(getApplicationContext(), "Rewarded dismis", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }, new OnRewardedAdDismissedListener() {
             @Override
             public void onRewardedAdDismissed() {
-
+                Toast.makeText(getApplicationContext(), "Rewarded dismis", Toast.LENGTH_SHORT).show();
             }
         }, new OnRewardedAdErrorListener() {
             @Override
@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAppLovinNativeId(Constant.APPLOVIN_NATIVE_MANUAL_ID)
                 .setAppLovinDiscoveryMrecZoneId(Constant.APPLOVIN_BANNER_MREC_ZONE_ID)
                 .setNativeAdStyle(Constant.NATIVE_STYLE)
-                .setNativeAdBackgroundColor(R.color.colorNativeBackgroundLight, R.color.colorNativeBackgroundDark)
+                .setNativeAdBackgroundColor(R.color.colorNativeBackgroundLight, R.color.colorBackgroundDark)
                 .setPadding(0, 0, 0, 0)
                 .setDarkTheme(sharedPref.getIsDarkTheme())
                 .build();
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                 .setAppLovinNativeId(Constant.APPLOVIN_NATIVE_MANUAL_ID)
                 .setAppLovinDiscoveryMrecZoneId(Constant.APPLOVIN_BANNER_MREC_ZONE_ID)
                 .setNativeAdStyle(Constant.NATIVE_STYLE)
-                .setNativeAdBackgroundColor(R.color.colorNativeBackgroundLight, R.color.colorNativeBackgroundDark)
+                .setNativeAdBackgroundColor(R.color.colorNativeBackgroundLight, R.color.colorBackgroundDark)
                 .setDarkTheme(sharedPref.getIsDarkTheme())
                 .setView(view)
                 .build();
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                     Constant.AD_NETWORK = FACEBOOK;
                     break;
                 case "pangle":
-                    Constant.AD_NETWORK = Constant.PANGLE;
+                    Constant.AD_NETWORK = PANGLE;
                     break;
                 default:
                     Constant.AD_NETWORK = STARTAPP;

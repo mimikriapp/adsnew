@@ -665,6 +665,7 @@ public class InterstitialAd {
 
                         if (interstitialAd != null) {
                             interstitialAd.show(activity);
+
                         }
                         break;
 
@@ -797,7 +798,7 @@ public class InterstitialAd {
 
                     case PANGLE:
                         Log.d(TAG, "PANGLE interstitial ad choosed");
-                        PAGInterstitialRequest request = new PAGInterstitialRequest();
+                     /*   PAGInterstitialRequest request = new PAGInterstitialRequest();
                         PAGInterstitialAd.loadAd(pangleInterstitialId,
                                 request,
                                 new PAGInterstitialAdLoadListener() {
@@ -813,8 +814,10 @@ public class InterstitialAd {
                                     }
                                 });
 
+                      */
 
-/*
+
+
                         PAGInterstitialAd.loadAd(pangleInterstitialId,
                                 new PAGInterstitialRequest(),
                                 new PAGInterstitialAdLoadListener() {
@@ -831,7 +834,7 @@ public class InterstitialAd {
                                     }
                                 });
 
- */
+
 
                         break;
 
@@ -1150,6 +1153,7 @@ public class InterstitialAd {
 
                             if (interstitialAd != null) {
                                 interstitialAd.show(activity);
+                                onInterstitialAdShowedListener.onInterstitialAdShowed();
                             } else {
                                 showBackupInterstitialAd(onInterstitialAdShowedListener, onInterstitialAdDismissedListener);
                             }
@@ -1249,6 +1253,7 @@ public class InterstitialAd {
 
                         if (interstitialAd != null) {
                             interstitialAd.show(activity);
+                            onInterstitialAdShowedListener.onInterstitialAdShowed();
                         }
                         break;
 
