@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
 }
 
 android {
@@ -48,5 +49,7 @@ dependencies {
     //GDPR
     implementation 'com.google.android.ump:user-messaging-platform:2.1.0'
     implementation 'com.google.android.ads.consent:consent-library:1.0.8'
+
+    implementation 'com.github.jitpack:gradle-simple:1.0'
 
 }
